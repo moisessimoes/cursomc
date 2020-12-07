@@ -1,6 +1,5 @@
 package com.moises.cursomc.services;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +22,11 @@ public class CategoriaService {
 	}
 	
 	
-	public void salvar() {
-		
-		Categoria cat1 = new Categoria(null, "Informárica");
-		Categoria cat2 = new Categoria(null, "Escritório");
-		
-		categoriaRepository.saveAll(Arrays.asList(cat1, cat2)); //Salvando no banco...
-	}
+//	public void salvar() {
+//		
+//		Categoria cat1 = new Categoria(null, "Informárica");
+//		Categoria cat2 = new Categoria(null, "Escritório");
+//		
+//		categoriaRepository.saveAll(Arrays.asList(cat1, cat2)); //Salvando no banco...
+//	}
 }
