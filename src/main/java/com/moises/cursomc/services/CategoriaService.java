@@ -23,11 +23,10 @@ public class CategoriaService {
 	}
 	
 	
-//	public void salvar() {
-//		
-//		Categoria cat1 = new Categoria(null, "Informárica");
-//		Categoria cat2 = new Categoria(null, "Escritório");
-//		
-//		categoriaRepository.saveAll(Arrays.asList(cat1, cat2)); //Salvando no banco...
-//	}
+	public Categoria salvar(Categoria obj) {
+		
+		obj.setId(null);
+		
+		return categoriaRepository.save(obj);
+	}
 }
