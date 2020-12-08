@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.moises.cursomc.domain.Categoria;
+import com.moises.cursomc.dto.CategoriaDTO;
 import com.moises.cursomc.repositories.CategoriaRepository;
 import com.moises.cursomc.services.exceptions.DataIntegrityException;
 import com.moises.cursomc.services.exceptions.ObjectNotFoundException;
@@ -27,6 +28,11 @@ public class CategoriaService {
 		
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! ID: " + id + " Tipo: " + Categoria.class.getName()));
 	}
+	
+	
+	/*O metodo do Spring Data para salvar e atualizar um objeto é o mesmo, logo, para atualizar, é
+	 * 
+	 * necessário informar o ID do objeto que vai ser atualizado.*/
 	
 	
 	public Categoria save(Categoria obj) {
@@ -65,5 +71,11 @@ public class CategoriaService {
 		PageRequest pgR = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		
 		return categoriaRepository.findAll(pgR);
+	}
+	
+	
+	public Categoria fromDTO(CategoriaDTO objDTO) {
+		
+		return new Categoria(objDTO.getId(), objDTO.getNome());
 	}
 }
