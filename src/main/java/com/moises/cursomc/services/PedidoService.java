@@ -38,7 +38,7 @@ public class PedidoService {
 	private ProdutoService produtoService;
 	
 	@Autowired
-	private EmailService emailService;
+	private EmailService gmailService;
 	
 	public Pedido find(Integer id) {
 		
@@ -85,7 +85,7 @@ public class PedidoService {
 		
 		itemPedidoRepository.saveAll(obj.getItens()); //Salvando so itens do pedido
 		
-		emailService.sendOrderConfirmationEmail(obj);
+		gmailService.sendOrderConfirmationEmail(obj);
 		
 		return obj;
 	}
