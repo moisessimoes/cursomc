@@ -38,7 +38,7 @@ public class PedidoService {
 	private ProdutoService produtoService;
 	
 	@Autowired
-	private EmailService gmailService;
+	private EmailService gmailService; //Se colocar o nome dessa variavel de emailService, o programa envia o email em forma de texto apenas.
 	
 	public Pedido find(Integer id) {
 		
@@ -85,7 +85,7 @@ public class PedidoService {
 		
 		itemPedidoRepository.saveAll(obj.getItens()); //Salvando so itens do pedido
 		
-		gmailService.sendOrderConfirmationEmail(obj);
+		gmailService.sendOrderConfirmationHtmlEmail(obj);
 		
 		return obj;
 	}
