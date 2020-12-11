@@ -44,17 +44,11 @@ public class Cliente implements Serializable {
 	
 	private Integer tipo;
 	
-	
-	/*Essa anotação @JsonManagedReference serve para dizer que o cliente pode serializar os seus endereços.
-	 * 
-	 * Pois nessa relação, o cliente e o endereço se conhecem, mas como a busca é feita apenas pelo lado do cliente,
-	 * 
-	 * os seus endereços devem vir juntos.
-	 * */
+	@JsonIgnore
+	private String senha;
 	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
-	
 	
 	
 	@ElementCollection
@@ -69,13 +63,14 @@ public class Cliente implements Serializable {
 	public Cliente() {}
 
 
-	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
+	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = (tipo == null) ? null : tipo.getCodigo();
+		this.senha = senha;
 	}
 
 
@@ -126,6 +121,14 @@ public class Cliente implements Serializable {
 
 	public void setTipo(TipoCliente tipo) {
 		this.tipo = tipo.getCodigo();
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 
