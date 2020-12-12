@@ -30,6 +30,8 @@ public class ClienteResource {
 	@Autowired
 	private ClienteService service;
 	
+	//===========================================================================================================================
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Cliente> find(@PathVariable Integer id) {
 		
@@ -38,6 +40,7 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	//===========================================================================================================================
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> inserir(@Valid @RequestBody NovoClienteDTO objDTO) {
@@ -51,6 +54,7 @@ public class ClienteResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	//===========================================================================================================================
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody ClienteDTO objDTO, @PathVariable Integer id) {
@@ -63,6 +67,8 @@ public class ClienteResource {
 		
 		return ResponseEntity.noContent().build();
 	}
+	
+	//===========================================================================================================================
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -84,6 +90,7 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(listaDTO);
 	}
 	
+	//===========================================================================================================================
 	
 	//METODO QUE RETORNA OS DADOS POR PAGINAÇÃO
 	@PreAuthorize("hasAnyRole('ADMIN')")
@@ -99,5 +106,4 @@ public class ClienteResource {
 		
 		return ResponseEntity.ok().body(listaDTO);
 	}
-
 }
