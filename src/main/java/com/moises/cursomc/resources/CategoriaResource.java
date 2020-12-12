@@ -37,6 +37,7 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	//===========================================================================================================================
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.POST)
@@ -51,6 +52,7 @@ public class CategoriaResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	//===========================================================================================================================
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -65,6 +67,7 @@ public class CategoriaResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	//===========================================================================================================================
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -75,6 +78,7 @@ public class CategoriaResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	//===========================================================================================================================
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<CategoriaDTO>> findAll() {
@@ -86,6 +90,7 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(listaDTO);
 	}
 	
+	//===========================================================================================================================
 	
 	//METODO QUE RETORNA OS DADOS POR PAGINAÇÃO
 	

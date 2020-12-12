@@ -15,11 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.moises.cursomc.domain.Cidade;
 import com.moises.cursomc.domain.Cliente;
 import com.moises.cursomc.domain.Endereco;
+import com.moises.cursomc.domain.enums.Perfil;
 import com.moises.cursomc.domain.enums.TipoCliente;
 import com.moises.cursomc.dto.ClienteDTO;
 import com.moises.cursomc.dto.NovoClienteDTO;
 import com.moises.cursomc.repositories.ClienteRepository;
 import com.moises.cursomc.repositories.EnderecoRepository;
+import com.moises.cursomc.security.UserSpringSecurity;
+import com.moises.cursomc.services.exceptions.AuthorizationException;
 import com.moises.cursomc.services.exceptions.DataIntegrityException;
 import com.moises.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -37,10 +40,16 @@ public class ClienteService {
 	
 	public Cliente find(Integer id) {
 		
+		UserSpringSecurity user = UserService.authenticated();
+		
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) throw new AuthorizationException("ACESSO NEGADO!");
+		
 		Optional<Cliente> obj = clienteRepository.findById(id);
 		
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! ID: " + id + " Tipo: " + Cliente.class.getName()));
 	}
+	
+	//===========================================================================================================================
 	
 	@Transactional
 	public Cliente save(Cliente obj) {
@@ -54,6 +63,7 @@ public class ClienteService {
 		return obj;
 	}
 	
+	//===========================================================================================================================
 	
 	public Cliente update(Cliente obj) {
 		
@@ -64,13 +74,15 @@ public class ClienteService {
 		return clienteRepository.save(newObj);
 	}
 	
+	//===========================================================================================================================
 	
 	private void updateData(Cliente newObj, Cliente obj) {
 		
 		newObj.setNome(obj.getNome());
 		newObj.setEmail(obj.getEmail());
 	}
-
+	
+	//===========================================================================================================================
 
 	public void delete(Integer id) {
 		
@@ -82,12 +94,14 @@ public class ClienteService {
 		}
 	}
 	
+	//===========================================================================================================================
 	
 	public List<Cliente> findAll() {
 		
 		return clienteRepository.findAll();
 	}
 	
+	//===========================================================================================================================
 	
 	public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		
@@ -96,12 +110,14 @@ public class ClienteService {
 		return clienteRepository.findAll(pgR);
 	}
 	
+	//===========================================================================================================================
 	
 	public Cliente fromDTO(ClienteDTO objDTO) {
 		
 		return new Cliente(objDTO.getId(), objDTO.getNome(), objDTO.getEmail(), null, null, null);
 	}
 	
+	//===========================================================================================================================
 	
 	public Cliente fromDTO(NovoClienteDTO objDTO) {
 		

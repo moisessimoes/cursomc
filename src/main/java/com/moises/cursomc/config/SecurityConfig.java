@@ -55,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/clientes/**"
 	};
 	
+	//===========================================================================================================================
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -77,6 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
+	//===========================================================================================================================
 	
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception { //CAPAZ DE BUSCAR O USUARIO POR EMAIL
@@ -84,6 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
 	}
 	
+	//===========================================================================================================================
 	
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() { //Disponivel em: https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/
@@ -93,6 +96,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return source;
 	}
 	
+	//===========================================================================================================================
 	
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
