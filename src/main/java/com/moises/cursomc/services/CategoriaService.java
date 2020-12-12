@@ -22,6 +22,8 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
+	//===========================================================================================================================
+	
 	public Categoria find(Integer id) {
 		
 		Optional<Categoria> obj = categoriaRepository.findById(id);
@@ -29,6 +31,7 @@ public class CategoriaService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! ID: " + id + " Tipo: " + Categoria.class.getName()));
 	}
 	
+	//===========================================================================================================================
 	
 	/*O metodo do Spring Data para salvar e atualizar um objeto é o mesmo, logo, para atualizar, é
 	 * 
@@ -42,6 +45,7 @@ public class CategoriaService {
 		return categoriaRepository.save(obj);
 	}
 	
+	//===========================================================================================================================
 	
 	public Categoria update(Categoria obj) {
 		
@@ -52,12 +56,14 @@ public class CategoriaService {
 		return categoriaRepository.save(newObj);
 	}
 	
+	//===========================================================================================================================
 	
 	private void updateData(Categoria newObj, Categoria obj) {
 		
 		newObj.setNome(obj.getNome());
 	}
-
+	
+	//===========================================================================================================================
 
 	public void delete(Integer id) {
 		
@@ -69,12 +75,14 @@ public class CategoriaService {
 		}
 	}
 	
+	//===========================================================================================================================
 	
 	public List<Categoria> findAll() {
 		
 		return categoriaRepository.findAll();
 	}
 	
+	//===========================================================================================================================
 	
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		
@@ -83,6 +91,7 @@ public class CategoriaService {
 		return categoriaRepository.findAll(pgR);
 	}
 	
+	//===========================================================================================================================
 	
 	public Categoria fromDTO(CategoriaDTO objDTO) {
 		
