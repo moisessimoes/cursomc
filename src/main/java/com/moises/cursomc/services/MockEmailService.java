@@ -20,6 +20,7 @@ public class MockEmailService extends AbstractEmailService {
 		LOG.info("E-mail em Texto Plano Enviado!");
 	}
 	
+	//===========================================================================================================================
 
 	@Override
 	public void sendHtmlEmail(MimeMessage msg) {
@@ -30,4 +31,7 @@ public class MockEmailService extends AbstractEmailService {
 		
 		LOG.info("E-mail HTML Enviado!");
 	}
+	
+	//===========================================================================================================================
+	
 }

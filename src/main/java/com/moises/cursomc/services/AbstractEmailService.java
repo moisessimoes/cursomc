@@ -13,6 +13,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import com.moises.cursomc.domain.Cliente;
 import com.moises.cursomc.domain.Pedido;
 
 public abstract class AbstractEmailService implements EmailService {
@@ -26,16 +27,19 @@ public abstract class AbstractEmailService implements EmailService {
 	@Autowired
 	private JavaMailSender javaMailSender;
 	
+	//===========================================================================================================================
+	
 	@Override
-	public void sendOrderConfirmationEmail(Pedido obj) {
+	public void sendOrderConfirmationEmail(Pedido obj) { //REFERENTE AO ENVIO DE E-MAIL DE TEXTO DO PEDIDO.
 		
 		SimpleMailMessage smm = prepareSimpleMailMessageFromPedido(obj);
 		
 		sendEmail(smm);
 	}
-
 	
-	protected SimpleMailMessage prepareSimpleMailMessageFromPedido(Pedido obj) {
+	//===========================================================================================================================
+	
+	protected SimpleMailMessage prepareSimpleMailMessageFromPedido(Pedido obj) { //REFERENTE AO ENVIO DE E-MAIL DE TEXTO DO PEDIDO.
 		
 		SimpleMailMessage smm = new SimpleMailMessage();
 		
@@ -52,8 +56,9 @@ public abstract class AbstractEmailService implements EmailService {
 		return smm;
 	}
 	
+	//===========================================================================================================================
 	
-	protected String htmlFromTemplatePedido(Pedido obj) {
+	protected String htmlFromTemplatePedido(Pedido obj) { //REFERENTE AO ENVIO DE E-MAIL HTML DO PEDIDO.
 		
 		Context context = new Context();
 		
@@ -63,9 +68,10 @@ public abstract class AbstractEmailService implements EmailService {
 		
 	}
 	
+	//===========================================================================================================================
 	
 	@Override
-	public void sendOrderConfirmationHtmlEmail(Pedido obj) {
+	public void sendOrderConfirmationHtmlEmail(Pedido obj) { //REFERENTE AO ENVIO DE E-MAIL HTML DO PEDIDO.
 		
 		try {
 			
@@ -77,9 +83,10 @@ public abstract class AbstractEmailService implements EmailService {
 			sendOrderConfirmationEmail(obj);
 		}
 	}
+	
+	//===========================================================================================================================
 
-
-	protected MimeMessage prepareMimeMessageFromPedido(Pedido obj) throws MessagingException {
+	protected MimeMessage prepareMimeMessageFromPedido(Pedido obj) throws MessagingException { //REFERENTE AO ENVIO DE E-MAIL HTML DO PEDIDO.
 		
 		MimeMessage mm = javaMailSender.createMimeMessage();
 		
@@ -92,5 +99,34 @@ public abstract class AbstractEmailService implements EmailService {
 		mmh.setText(htmlFromTemplatePedido(obj), true);
 		
 		return mm;
+	}
+	
+	
+	//===========================================================================================================================
+	
+	@Override
+	public void sendNewPasswordEmail(Cliente cliente, String newPass) { //REFERENTE AO ENVIO DE E-MAIL DE TEXTO DE UMA NOVA SENHA DO USUARIO.
+		
+		SimpleMailMessage smm = prepareNewPasswordEmail(cliente, newPass);
+		
+		sendEmail(smm);
+	}
+	
+
+	protected SimpleMailMessage prepareNewPasswordEmail(Cliente cliente, String newPass) { //REFERENTE AO ENVIO DE E-MAIL DE TEXTO DE UMA NOVA SENHA DO USUARIO.
+		
+		SimpleMailMessage smm = new SimpleMailMessage();
+		
+		smm.setTo(cliente.getEmail()); //Destinatário
+		
+		smm.setFrom(sender); //Remetente
+		
+		smm.setSubject("Solicitação de Nova Senha");
+		
+		smm.setSentDate(new Date(System.currentTimeMillis()));
+		
+		smm.setText("NOVA SENHA: " + newPass);
+		
+		return smm;
 	}
 }
