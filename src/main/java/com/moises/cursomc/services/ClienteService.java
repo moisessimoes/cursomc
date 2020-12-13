@@ -1,9 +1,12 @@
 package com.moises.cursomc.services;
 
+import java.awt.image.BufferedImage;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +14,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.moises.cursomc.domain.Cidade;
 import com.moises.cursomc.domain.Cliente;
@@ -37,6 +41,18 @@ public class ClienteService {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private S3Service s3Service;
+	
+	@Autowired
+	private ImageService imageService;
+	
+	@Value("${img.prefix.client.profile}")
+	private String prefix;
+	
+	@Value("${img.profile.size}")
+	private Integer size;
 	
 	//===========================================================================================================================
 	
@@ -138,5 +154,23 @@ public class ClienteService {
 		if(objDTO.getTelefone3() != null) cli.getTelefones().add(objDTO.getTelefone3()); //Se o telefone3 nao for null, ele adiciona
 		
 		return cli; 
+	}
+	
+	//===========================================================================================================================
+	
+	public URI uploadProfilePicture(MultipartFile mpf) { //METODO QUE FAZ O UPLOAD DE UMA IMAGEM DE PERFIL PARA O AMAZON S3
+		
+		UserSpringSecurity user = UserService.authenticated();
+		
+		if(user == null) throw new AuthorizationException("ACESSO NEGADO!");
+		
+		BufferedImage jpgImage = imageService.getJpgImageFromFile(mpf);
+		
+		jpgImage = imageService.cropSquare(jpgImage); //RECORTANDO A IMAGEM PARA DEIXAR ELA QUADRADA
+		jpgImage = imageService.resize(jpgImage, size); //REDIMENSIOANDO A IMAGEM
+		
+		String fileName = prefix + user.getId() + ".jpg";
+		
+		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
 	}
 }
