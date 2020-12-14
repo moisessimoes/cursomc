@@ -93,6 +93,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() { //Disponivel em: https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/
 		
+		//Liberando CORS para PUT e DELETE
+		
 		CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
 		config.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
 		
