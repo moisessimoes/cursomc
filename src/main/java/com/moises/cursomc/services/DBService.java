@@ -68,7 +68,9 @@ public class DBService {
 	
 	public void instantiateTestDatabase() throws ParseException {
 		
-		Categoria cat1 = new Categoria(null, "Informártica");
+		//CRIANDO AS CATEGORIAS, PRODUTOS E ASSOCIANDO ELES.
+		
+		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
 		Categoria cat3 = new Categoria(null, "Cama mesa e banho");
 		Categoria cat4 = new Categoria(null, "Eletrônicos");
@@ -198,6 +200,8 @@ public class DBService {
 		
 		//--------------------------------------------------------------------------------------------------------------------
 		
+		//CRIANDO OS ESTADOS E CIDADES
+		
 		Estado est1 = new Estado(null, "Minas Gerais");
 		Estado est2 = new Estado(null, "São Paulo");
 		
@@ -215,10 +219,12 @@ public class DBService {
 		
 		//--------------------------------------------------------------------------------------------------------------------
 		
-		Cliente cli1 = new Cliente(null, "Moisés Simões", "moisessimoes02@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, bcpe.encode("12345"));
+		//CRIANDO OS CLIENTES E ENDEREÇOS
+		
+		Cliente cli1 = new Cliente(null, "Spring Apps", "spring@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, bcpe.encode("12345"));
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 		
-		Cliente cli2 = new Cliente(null, "Gabriel Simões", "gabriel.simoes@gmail.com", "38956194009", TipoCliente.PESSOAFISICA, bcpe.encode("123"));
+		Cliente cli2 = new Cliente(null, "Ionic App", "ionic@gmail.com", "38956194009", TipoCliente.PESSOAFISICA, bcpe.encode("123"));
 		cli2.addPerfil(Perfil.ADMIN);
 		cli2.getTelefones().addAll(Arrays.asList("998745632", "999974563"));
 		
@@ -234,6 +240,8 @@ public class DBService {
 		enderecoRepository.saveAll(Arrays.asList(ed1, ed2, ed3));
 		
 		//--------------------------------------------------------------------------------------------------------------------
+		
+		//CRIANDO OS PEDIDOS E PAGAMENTOS
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
@@ -254,6 +262,8 @@ public class DBService {
 		pagamentoRepository.saveAll(Arrays.asList(pgto1, pgto2));
 		
 		//---------------------------------------------------------------------------------------------------------------------
+		
+		//CRIANDO OS ITENS DE PEDIDO E ASSOCIANDO ELES AOS RESPECTIVOS PEDIDOS
 		
 		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
 		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);

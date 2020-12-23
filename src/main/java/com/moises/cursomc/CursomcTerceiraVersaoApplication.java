@@ -15,6 +15,7 @@ public class CursomcTerceiraVersaoApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
+		//Aqui vai algum código para ser executado assim que a aplicação iniciar.
 		
 	}
 }

@@ -51,9 +51,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	};
 	
 	
-	private static final String[] PUBLIC_MATCHERS_POST = { //CAMINHOS DE ACESSO PUBLICO APENAS PARA A LEITURA DOS DADOS
+	private static final String[] PUBLIC_MATCHERS_POST = { //CAMINHOS DE ACESSO PUBLICO PARA SALVAR OS DADOS
 			
-			"/clientes/",
+			"/clientes/**",
 			"/auth/forgot/**"
 	};
 	
@@ -69,8 +69,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.cors().and().csrf().disable();
 		
-		http.authorizeRequests().antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
+		http.authorizeRequests()
 		.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
+		.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
 		.antMatchers(PUBLIC_MATCHERS).permitAll().anyRequest().authenticated();
 		
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));

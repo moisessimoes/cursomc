@@ -58,7 +58,7 @@ public class ClienteResource {
 		
 		Cliente obj = service.fromDTO(objDTO);
 		
-		obj = service.save(obj);
+		obj = service.insert(obj);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		

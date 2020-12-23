@@ -70,7 +70,7 @@ public class ClienteService {
 	//===========================================================================================================================
 	
 	@Transactional
-	public Cliente save(Cliente obj) {
+	public Cliente insert(Cliente obj) {
 		
 		obj.setId(null);
 		
