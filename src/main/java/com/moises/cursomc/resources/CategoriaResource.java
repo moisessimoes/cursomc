@@ -22,6 +22,10 @@ import com.moises.cursomc.domain.Categoria;
 import com.moises.cursomc.dto.CategoriaDTO;
 import com.moises.cursomc.services.CategoriaService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
@@ -29,6 +33,7 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
 	
+	@ApiOperation(value="Busca por id") //Essa anotação diz respeito a documentação do projeto
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
 		
@@ -40,6 +45,7 @@ public class CategoriaResource {
 	//===========================================================================================================================
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
+	@ApiOperation(value="Insere categoria") //Essa anotação diz respeito a documentação do projeto
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> inserir(@Valid @RequestBody CategoriaDTO objDTO) {
 		
@@ -55,6 +61,7 @@ public class CategoriaResource {
 	//===========================================================================================================================
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
+	@ApiOperation(value="Atualiza categoria") //Essa anotação diz respeito a documentação do projeto
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDTO, @PathVariable Integer id) {
 		
@@ -70,6 +77,10 @@ public class CategoriaResource {
 	//===========================================================================================================================
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
+	@ApiOperation(value="Exclui categoria") //Essa anotação diz respeito a documentação do projeto
+	@ApiResponses(value = { //Essa anotação diz respeito a documentação do projeto
+			@ApiResponse(code = 400, message = "Não é possível excluir uma categoria que possui produtos"),
+			@ApiResponse(code = 404, message = "Código inexistente") })
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		
@@ -80,6 +91,7 @@ public class CategoriaResource {
 	
 	//===========================================================================================================================
 	
+	@ApiOperation(value="Retorna todas as categorias") //Essa anotação diz respeito a documentação do projeto
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<CategoriaDTO>> findAll() {
 		
@@ -94,6 +106,7 @@ public class CategoriaResource {
 	
 	//METODO QUE RETORNA OS DADOS POR PAGINAÇÃO
 	
+	@ApiOperation(value="Retorna as categorias com paginação")
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
 	public ResponseEntity<Page<CategoriaDTO>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page, 
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
